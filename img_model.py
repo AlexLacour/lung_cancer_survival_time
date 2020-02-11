@@ -19,19 +19,22 @@ def addUpProject(model, n_filters):
 
 def create_model(input_shape=(92, 92, 1)):
     model = Sequential()
-    model.add(Conv2D(256, kernel_size=3, padding='same', input_shape=input_shape))
+    model.add(Conv2D(256, kernel_size=3, padding='same',
+                     activation='relu', input_shape=input_shape))
 
     for _ in range(2):
         model.add(MaxPooling2D())
-        model.add(Conv2D(256, kernel_size=3, padding='same'))
+        model.add(Conv2D(256, kernel_size=3,
+                         padding='same', activation='relu'))
 
     for _ in range(2):
         model.add(UpSampling2D())
-        model.add(Conv2D(256, kernel_size=3, padding='same'))
+        model.add(Conv2D(256, kernel_size=3,
+                         padding='same', activation='relu'))
 
-    model.add(Conv2D(1, kernel_size=3, padding='same'))
+    model.add(Conv2D(1, kernel_size=3, padding='same', activation='sigmoid'))
 
-    model.compile(optimizer='adam',
+    model.compile(optimizer='adadelta',
                   loss='binary_crossentropy')
 
     return model
@@ -55,15 +58,19 @@ if __name__ == '__main__':
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
+    X_train = (X_train + X_train.min()) / (X_train.max() - X_train.min())
+    X_test = (X_test + X_test.min()) / (X_test.max() - X_test.min())
     train_gen = ImageDataGenerator()
     test_gen = ImageDataGenerator()
 
-    train_gen = train_gen.flow(X_train, y_train)
-    test_gen = test_gen.flow(X_test, y_test)
+    train_gen = train_gen.flow(X_train, y_train, batch_size=32)
+    test_gen = test_gen.flow(X_test, y_test, batch_size=32)
 
     h = model.fit_generator(train_gen,
-                            epochs=50,
-                            validation_data=test_gen)
+                            epochs=10,
+                            steps_per_epoch=len(X_train) // 32,
+                            validation_data=test_gen,
+                            validation_steps=len(X_test) // 32)
 
     plt.plot(h.history['loss'])
     plt.plot(h.history['val_loss'])
