@@ -1,2 +1,4 @@
 __pycache__/
 *.h5
+x_train/
+x_test/
