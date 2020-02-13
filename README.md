@@ -1,5 +1,6 @@
 # lung_cancer_survival_time
 ## Quick-Start
+Place these codes in the same directory as the data, putting the training folders "images" and "features" in a folder named "x_train", the training output in a folder named "y_train", and the validation folders "images" and "features" in a "x_test" folder.
 Run
 ```python
 python model.py
