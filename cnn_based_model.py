@@ -156,32 +156,32 @@ if __name__ == '__main__':
     hr_pred2 = model.predict([scan_test, r_test, c_test])
     hr_pred2 = np.exp(hr_pred2)
 
-    train_true = pd.DataFrame()
-    train_true['PatientID'] = idx_train
-    train_true['SurvivalTime'] = y_train
-    train_true['Event'] = events_train
-    train_true.set_index('PatientID', inplace=True)
+    # train_true = pd.DataFrame()
+    # train_true['PatientID'] = idx_train
+    # train_true['SurvivalTime'] = y_train
+    # train_true['Event'] = events_train
+    # train_true.set_index('PatientID', inplace=True)
 
-    train_pred = pd.DataFrame()
-    train_pred['PatientID'] = idx_train
-    train_pred['SurvivalTime'] = hr_pred
-    train_pred['Event'] = None
-    train_pred.set_index('PatientID', inplace=True)
+    # train_pred = pd.DataFrame()
+    # train_pred['PatientID'] = idx_train
+    # train_pred['SurvivalTime'] = hr_pred
+    # train_pred['Event'] = None
+    # train_pred.set_index('PatientID', inplace=True)
 
-    test_true = pd.DataFrame()
-    test_true['PatientID'] = idx_test
-    test_true['SurvivalTime'] = y_test
-    test_true['Event'] = events_test
-    test_true.set_index('PatientID', inplace=True)
+    # test_true = pd.DataFrame()
+    # test_true['PatientID'] = idx_test
+    # test_true['SurvivalTime'] = y_test
+    # test_true['Event'] = events_test
+    # test_true.set_index('PatientID', inplace=True)
 
-    test_pred = pd.DataFrame()
-    test_pred['PatientID'] = idx_test
-    test_pred['SurvivalTime'] = hr_pred2
-    test_pred['Event'] = None
-    test_pred.set_index('PatientID', inplace=True)
+    # test_pred = pd.DataFrame()
+    # test_pred['PatientID'] = idx_test
+    # test_pred['SurvivalTime'] = hr_pred2
+    # test_pred['Event'] = None
+    # test_pred.set_index('PatientID', inplace=True)
 
-    ci_train = metric.cindex(train_true, train_pred)
-    ci_test = metric.cindex(test_true, test_pred)
+    # ci_train = metric.cindex(train_true, train_pred)
+    # ci_test = metric.cindex(test_true, test_pred)
 
-    print(ci_train)
-    print(ci_test)
+    # print(ci_train)
+    # print(ci_test)
